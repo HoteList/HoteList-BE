@@ -19,6 +19,24 @@ class ApiAuthController extends Controller
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function register (Request $request) {
+        function get_client_ip() {
+            $ipaddress = '';
+            if (isset($_SERVER['HTTP_CLIENT_IP']))
+                $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+            else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            else if(isset($_SERVER['HTTP_X_FORWARDED']))
+                $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+            else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+                $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+            else if(isset($_SERVER['HTTP_FORWARDED']))
+                $ipaddress = $_SERVER['HTTP_FORWARDED'];
+            else if(isset($_SERVER['REMOTE_ADDR']))
+                $ipaddress = $_SERVER['REMOTE_ADDR'];
+            else
+                $ipaddress = 'UNKNOWN';
+            return $ipaddress;
+        }
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
@@ -37,10 +55,12 @@ class ApiAuthController extends Controller
         $user = User::create($request->toArray());
         $token = $user->createToken('TokenHotel')->plainTextToken;
         // $response = ['user'=>$user,'token' => $token];
-        $response = ['user'=>$user,'token' => $token,'ip' => $ip];
+        $client_ip = request()->getClientIp();
+        $header_ip = get_client_ip();
+        $response = ['user'=>$user,'token' => $token,'ip' => $ip,'clientip' => $client_ip, 'header_ip' => $header_ip];
         return response($response, 200);
     }
-
+    
 
     /**
      * @param Request $request
