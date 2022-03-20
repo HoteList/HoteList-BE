@@ -30,7 +30,8 @@ class ApiAuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password']=Hash::make($request['password']);
-        $position = Location::get();
+        $ip = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+        $position = Location::get($ip);
         $request['lat']=$position->latitude;
         $request['lot']=$position->longitude;
         $user = User::create($request->toArray());
