@@ -36,7 +36,8 @@ class ApiAuthController extends Controller
         $request['lot']=$position->longitude;
         $user = User::create($request->toArray());
         $token = $user->createToken('TokenHotel')->plainTextToken;
-        $response = ['user'=>$user,'token' => $token];
+        // $response = ['user'=>$user,'token' => $token];
+        $response = ['user'=>$user,'token' => $token,'ip' => $ip];
         return response($response, 200);
     }
 
