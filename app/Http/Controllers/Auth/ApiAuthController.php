@@ -48,18 +48,18 @@ class ApiAuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         $request['password']=Hash::make($request['password']);
-        $ip = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
         $header_ip = get_client_ip();
-        $client_ip = request()->getClientIp();
+        // $ip = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
+        // $client_ip = request()->getClientIp();
         $position = Location::get($header_ip);
         $request['lat']=$position->latitude;
         $request['lot']=$position->longitude;
         $user = User::create($request->toArray());
         $token = $user->createToken('TokenHotel')->plainTextToken;
-        // $response = ['user'=>$user,'token' => $token];
+        $response = ['user'=>$user,'token' => $token];
         
        
-        $response = ['user'=>$user,'token' => $token,'ip' => $ip,'clientip' => $client_ip, 'header_ip' => $header_ip];
+        // $response = ['user'=>$user,'token' => $token,'ip' => $ip,'clientip' => $client_ip, 'header_ip' => $header_ip];
         return response($response, 200);
     }
     
