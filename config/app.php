@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Stevebauman\Location\LocationServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        // passport
+        Laravel\Passport\PassportServiceProvider::class,
 
     ],
 
