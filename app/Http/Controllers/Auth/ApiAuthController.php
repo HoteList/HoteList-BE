@@ -34,7 +34,7 @@ class ApiAuthController extends Controller
             else if(isset($_SERVER['REMOTE_ADDR']))
                 $ipaddress = $_SERVER['REMOTE_ADDR'];
             else
-                $ipaddress = '';
+                $ipaddress = '127.0.0.1';
             return $ipaddress;
         }
         $validator = Validator::make($request->all(), [
@@ -52,13 +52,12 @@ class ApiAuthController extends Controller
         // $ip = trim(shell_exec("dig +short myip.opendns.com @resolver1.opendns.com"));
         // $client_ip = request()->getClientIp();
         $position = Location::get($header_ip);
-        $request['lat']=$position->latitude;
-        $request['lot']=$position->longitude;
+        $request['lat']=$position == NULL ? "" : $position->latitude;
+        $request['lot']=$position == NULL ? "" : $position->longitude;
         $user = User::create($request->toArray());
         $token = $user->createToken('TokenHotel')->plainTextToken;
         $response = ['user'=>$user,'token' => $token];
         
-       
         // $response = ['user'=>$user,'token' => $token,'ip' => $ip,'clientip' => $client_ip, 'header_ip' => $header_ip];
         return response($response, 200);
     }
