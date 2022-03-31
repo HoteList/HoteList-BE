@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Hotel\ApiHotelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/register',[ApiAuthController::class, 'register']);
     // Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
+    Route::get('/getAllHotels', [ApiHotelController::class, 'getAllHotels']);
+    Route::get('/getHotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
+    Route::post('/addHotel', [ApiHotelController::class, 'addHotel']);
+    Route::put('/updateHotel', [ApiHotelController::class, 'updateHotel']);
+    Route::delete('/deleteHotel', [ApiHotelController::class, 'deleteHotel']);
 });
