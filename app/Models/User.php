@@ -25,6 +25,7 @@ class User extends Authenticatable
         'lat',
         'lot',
         'role',
+        'image',
     ];
 
     /**
