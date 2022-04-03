@@ -33,7 +33,6 @@ class ApiHotelController extends Controller
 
     public function updateHotel(Request $request) {
         $hotel = Hotel::where('id', $request->id)->first();
-        // error_log($hotel);
         if ($request->name === $hotel->name) {
             $hotel['description'] = $request['description'];
             $hotel['capacity'] = $request['capacity'];

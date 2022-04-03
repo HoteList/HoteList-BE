@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Hotel\ApiHotelController;
+use App\Http\Controllers\RoomDetails\ApiRoomDetailsController;
+use App\Http\Controllers\User\ApiUserController;
+
+// use App\Http\Controllers\RoomDetails\ApiRoomDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +38,14 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::post('/register',[ApiAuthController::class, 'register']);
     // Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
+    // Get all rooms by hotel id
+    Route::get('/roomDetails/{hotelid}',[ApiRoomDetailsController::class, 'getAllRoomsByHotelId']);
+    
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
+    Route::get('/user',[ApiUserController::class, 'getAllUsers']);
+    Route::put('/user',[ApiUserController::class, 'updateUser']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
@@ -42,4 +54,10 @@ Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.respons
     Route::post('/addHotel', [ApiHotelController::class, 'addHotel']);
     Route::put('/updateHotel', [ApiHotelController::class, 'updateHotel']);
     Route::delete('/deleteHotel', [ApiHotelController::class, 'deleteHotel']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
+    Route::post('/roomDetails',[ApiRoomDetailsController::class, 'addRoomDetails']);
+    Route::put('/roomDetails',[ApiRoomDetailsController::class, 'updateRoomDetails']);
+    Route::delete('/roomDetails',[ApiRoomDetailsController::class, 'deleteRoomDetails']);
 });
