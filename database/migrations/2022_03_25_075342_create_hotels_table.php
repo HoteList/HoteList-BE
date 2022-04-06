@@ -20,7 +20,7 @@ class CreateHotelsTable extends Migration
             $table->integer('capacity');
             $table->string('lat')->nullable();
             $table->string('lot')->nullable();
-            $table->string('image');
+            $table->text('image');
             $table->timestamps();
         });
     }
