@@ -19,7 +19,7 @@ class ApiHotelController extends Controller
     public function addHotel(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:hotels',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'capacity' => 'required|integer',
         ]);
         if ($validator->fails())
@@ -36,7 +36,7 @@ class ApiHotelController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',Rule::unique('hotels')->ignore($request->id),
-            'description' => 'required|string|max:255',
+            'description' => 'required|string',
             'capacity' => 'required|integer',
             'image' => 'required|string|max:255'
         ]);

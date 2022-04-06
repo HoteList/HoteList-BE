@@ -17,7 +17,7 @@ class CreateRoomDetailsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('price');
-            $table->string('description');
+            $table->text('description');
             $table->text('image');
             $table->unsignedBigInteger('hotel_id');
             $table->foreign('hotel_id')->references('id')->on('hotels');
