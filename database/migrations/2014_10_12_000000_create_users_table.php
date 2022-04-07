@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('lat')->nullable();
             $table->string('lot')->nullable();  
             $table->enum('role', ['user','admin'])->default('user');
-            $table->string('image')->nullable();
+            $table->text('image')->nullable();
             $table->timestamps();
         });
     }

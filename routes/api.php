@@ -49,11 +49,11 @@ Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.respons
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
-    Route::get('/getAllHotels', [ApiHotelController::class, 'getAllHotels']);
-    Route::get('/getHotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
-    Route::post('/addHotel', [ApiHotelController::class, 'addHotel']);
-    Route::put('/updateHotel', [ApiHotelController::class, 'updateHotel']);
-    Route::delete('/deleteHotel', [ApiHotelController::class, 'deleteHotel']);
+    Route::get('/hotel', [ApiHotelController::class, 'getAllHotels']);
+    Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
+    Route::post('/hotel', [ApiHotelController::class, 'addHotel']);
+    Route::put('/hotel', [ApiHotelController::class, 'updateHotel']);
+    Route::delete('/hotel', [ApiHotelController::class, 'deleteHotel']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {

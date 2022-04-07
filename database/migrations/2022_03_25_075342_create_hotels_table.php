@@ -16,11 +16,11 @@ class CreateHotelsTable extends Migration
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->integer('capacity');
             $table->string('lat')->nullable();
             $table->string('lot')->nullable();
-            $table->string('image');
+            $table->text('image');
             $table->timestamps();
         });
     }
