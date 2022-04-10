@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RoomDetails;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +16,8 @@ class RoomDetailSeeder extends Seeder
     public function run()
     {
         //
+        RoomDetails::factory()->count(10)->create();
+
         DB::table('room_details')->insert([
             "name"=>"Kings Gambit",
             "price"=>"100000",
