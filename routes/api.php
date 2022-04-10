@@ -33,10 +33,8 @@ Route::get('/',function(){
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
-    // Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/login',[ApiAuthController::class, 'login']);
     Route::post('/register',[ApiAuthController::class, 'register']);
-    // Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
 
     // Get all rooms by hotel id
     Route::get('/roomDetails/{hotelid}',[ApiRoomDetailsController::class, 'getAllRoomsByHotelId']);
