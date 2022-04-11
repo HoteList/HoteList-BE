@@ -62,8 +62,19 @@ class ApiHotelController extends Controller
     }
 
     public function deleteHotel(Request $request) {
-        Hotel::where('id', $request->id)->delete();
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer|exists:hotels',
+        ]);
+        if ($validator->fails()) {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        
+        $hotel = Hotel::where('id', $request->id)->first();
+        $response["hotel"] = $hotel["name"];
+        $response["message"] = "Hotel Deleted {$hotel['name']}";
 
-        return response('hotel deleted', 200);
+        $hotel->delete();
+
+        return response($response, 200);
     }
 }

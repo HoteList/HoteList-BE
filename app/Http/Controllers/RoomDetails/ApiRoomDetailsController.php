@@ -58,8 +58,20 @@ class ApiRoomDetailsController extends Controller
     }
 
     public function deleteRoomDetails(Request $request) {
-        RoomDetails::where('id', $request->id)->delete();
 
-        return response('room details deleted', 200);
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer|exists:room_details',
+        ]);
+        if ($validator->fails()) {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        
+        $room = RoomDetails::where('id', $request->id)->first();
+        $response["room"] = $room["name"];
+        $response["message"] = "Room Deleted {$room['name']}";
+
+        $room->delete();
+
+        return response($response, 200);
     }
 }
