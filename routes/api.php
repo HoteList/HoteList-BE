@@ -32,15 +32,19 @@ Route::get('/',function(){
 
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
-
-    // Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
     Route::post('/login',[ApiAuthController::class, 'login']);
     Route::post('/register',[ApiAuthController::class, 'register']);
-    // Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+});
 
+Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], function () {
     // Get all rooms by hotel id
     Route::get('/roomDetails/{hotelid}',[ApiRoomDetailsController::class, 'getAllRoomsByHotelId']);
     
+    // Get All Hotels
+    Route::get('/hotel', [ApiHotelController::class, 'getAllHotels']);
+    
+    // Get Hotel By ID 
+    Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
@@ -49,8 +53,6 @@ Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.respons
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
-    Route::get('/hotel', [ApiHotelController::class, 'getAllHotels']);
-    Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
     Route::post('/hotel', [ApiHotelController::class, 'addHotel']);
     Route::put('/hotel', [ApiHotelController::class, 'updateHotel']);
     Route::delete('/hotel', [ApiHotelController::class, 'deleteHotel']);
