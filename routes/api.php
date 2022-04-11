@@ -38,7 +38,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
 Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], function () {
     // Get all rooms by hotel id
-    Route::get('/roomDetails/{hotelid}',[ApiRoomDetailsController::class, 'getAllRoomsByHotelId']);
+    Route::get('/roomDetails/hotel/{hotelid}',[ApiRoomDetailsController::class, 'getAllRoomsByHotelId']);
+    
+    // get one room by id
+    Route::get('/roomDetails/{id}',[ApiRoomDetailsController::class, 'getOneRoomById']);
     
     // Get All Hotels
     Route::get('/hotel', [ApiHotelController::class, 'getAllHotels']);

@@ -15,6 +15,19 @@ class ApiRoomDetailsController extends Controller
         return response($rooms, 200);
     }
 
+    public function getOneRoomById(Request $request,$id){
+        $request['id'] = $id;
+        $validator = Validator::make($request->all(), [ 'id' => 'required|integer|exists:room_details']);
+        if ($validator->fails())
+        {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
+        $room = RoomDetails::where('id', $id)->get();
+
+        return response($room, 200);
+    }
+
     public function addRoomDetails(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
