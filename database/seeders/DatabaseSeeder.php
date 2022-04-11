@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             HotelSeeder::class,
             RoomDetailSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

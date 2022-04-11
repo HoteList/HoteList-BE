@@ -38,7 +38,6 @@ class ApiHotelController extends Controller
             'name' => 'required|string|max:255',Rule::unique('hotels')->ignore($request->id),
             'description' => 'required|string',
             'capacity' => 'required|integer',
-            'image' => 'required|string|max:255'
         ]);
         if ($validator->fails()) {
             return response(['errors'=>$validator->errors()->all()], 422);
@@ -50,7 +49,7 @@ class ApiHotelController extends Controller
         $hotel['capacity'] = $request['capacity'];
         $hotel['lat'] = $request['lat'] == NULL ? "" : $request['lat'];
         $hotel['lot'] = $request['lot'] == NULL ? "" : $request['lot'];
-        $hotel['image'] = $request['image'];
+        $hotel['image'] = $request['image'] == NULL ? "" : $request['image'];
 
         $hotel->save();
 
