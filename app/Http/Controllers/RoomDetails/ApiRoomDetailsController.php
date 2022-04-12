@@ -23,7 +23,7 @@ class ApiRoomDetailsController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
 
-        $room = RoomDetails::where('id', $id)->get();
+        $room = RoomDetails::where('id', $id)->first();
 
         return response($room, 200);
     }
