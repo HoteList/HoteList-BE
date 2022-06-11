@@ -32,6 +32,7 @@ class ApiRoomDetailsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|string',
+            'capacity' => 'required|integer',
             'description' => 'required|string',
             'image' => 'required|string',
             'hotel_id' => 'required|exists:hotels,id', 
@@ -50,6 +51,7 @@ class ApiRoomDetailsController extends Controller
             'id' => 'required|integer|exists:room_details,id',
             'name' => 'required|string|max:255',
             'price' => 'required|string',
+            'capacity' => 'required|integer',
             'description' => 'required|string',
             'image' => 'required|string',
             'hotel_id' => 'required|exists:hotels,id',

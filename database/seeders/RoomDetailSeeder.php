@@ -21,6 +21,7 @@ class RoomDetailSeeder extends Seeder
         DB::table('room_details')->insert([
             "name"=>"Kings Gambit",
             "price"=>"100000",
+            "capacity"=>2,
             "description"=>"Chess Grandmaster Room",
             "image" => "https://www.ahstatic.com/photos/5451_ho_00_p_1024x768.jpg",
             "hotel_id"=>100,
