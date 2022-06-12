@@ -50,7 +50,13 @@ Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], functi
     // Get Hotel By ID 
     Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
 
-    // Get Transaction By HotelID at Date
+    // Get Transaction by ID
+    Route::get('/transaction/{id}', [ApiTransactionController::class, 'getTransactionById']);
+
+    // Get Transaction by User ID
+    Route::get('/transaction/user/{user_id}', [ApiTransactionController::class, 'getTransactionsByUserId']);
+
+    // Get Transaction By RoomID at Date
     Route::get('/transaction/room/{room_id}/time/{time}', [ApiTransactionController::class, 'getTransactionsByRoomIdAtTime']);
 
     // Get Transaction By Room ID

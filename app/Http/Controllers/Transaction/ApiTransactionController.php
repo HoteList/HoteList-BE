@@ -29,8 +29,14 @@ class ApiTransactionController extends Controller
         return response($transactions, 200);
     }
 
-    public function getTransactionsByHotelId(Request $request, $hotel_id) {
-        $transactions = Transaction::where('hotel_id', $hotel_id)->get();
+    public function getTransactionById(Request $request, $id) {
+        $transaction = Transaction::where('id', $id)->first();
+
+        return response($transaction, 200);
+    }
+
+    public function getTransactionsByUserId(Request $request, $user_id) {
+        $transactions = Transaction::where('user_id', $user_id)->get();
         
         return response($transactions, 200);
     }
@@ -49,13 +55,14 @@ class ApiTransactionController extends Controller
     public function addTransaction(Request $request) {
         $validator = Validator::make($request->all(), [
             'room_id' => 'required|integer|exists:room_details,id',
-            'user_id' => 'required|integer|exists:users,id',
             'book_date' => 'required|date_format:Y/m/d',
         ]);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
+
+        $request['user_id'] = auth()->user()->id;
 
         $booked = DB::table('transactions')
                         ->select('id', 'room_id', 'book_date')
