@@ -54,7 +54,7 @@ Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], functi
     Route::get('/transaction/{id}', [ApiTransactionController::class, 'getTransactionById']);
 
     // Get Transaction by User ID
-    Route::get('/transaction/user/{user_id}', [ApiTransactionController::class, 'getTransactionsByUserId']);
+    Route::get('/transaction/user', [ApiTransactionController::class, 'getTransactionsByUserId']);
 
     // Get Transaction By RoomID at Date
     Route::get('/transaction/room/{room_id}/time/{time}', [ApiTransactionController::class, 'getTransactionsByRoomIdAtTime']);
