@@ -17,7 +17,6 @@ class CreateHotelsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description');
-            $table->integer('capacity');
             $table->string('lat')->nullable();
             $table->string('lot')->nullable();
             $table->text('image');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Hotel;
+use App\Models\RoomDetails;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
@@ -13,6 +14,15 @@ class ApiHotelController extends Controller
 {
     public function getAllHotels() {
         $hotel = Hotel::all();
+
+        foreach ($hotel as $h) {
+            $h['capacity'] = 0;
+            $rooms = RoomDetails::where('hotel_id', $h['id'])->get();
+            foreach ($rooms as $r) {
+                $h['capacity'] += $r['capacity'];
+            }
+        }
+
         return response($hotel, 200);
     }
 
@@ -58,6 +68,14 @@ class ApiHotelController extends Controller
 
     public function getOneHotel($hotelid) {
         $hotel = Hotel::where('id', $hotelid)->first();
+
+        $rooms = RoomDetails::where('hotel_id', $hotelid)->get();
+        $hotel['capacity'] = 0;
+
+        foreach ($rooms as $r) {
+            $hotel['capacity'] += $r['capacity'];
+        }
+
         return response($hotel, 200);
     }
 

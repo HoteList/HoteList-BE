@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Hotel\ApiHotelController;
 use App\Http\Controllers\RoomDetails\ApiRoomDetailsController;
+use App\Http\Controllers\Transaction\ApiTransactionController;
 use App\Http\Controllers\User\ApiUserController;
 
 // use App\Http\Controllers\RoomDetails\ApiRoomDetailsController;
@@ -48,6 +49,15 @@ Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], functi
     
     // Get Hotel By ID 
     Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
+
+    // Get Transaction By HotelID at Date
+    Route::get('/transaction/room/{room_id}/time/{time}', [ApiTransactionController::class, 'getTransactionsByRoomIdAtTime']);
+
+    // Get Transaction By Room ID
+    Route::get('/transaction/room/{room_id}',[ApiTransactionController::class, 'getTransactionsByRoomId']);
+
+    // Post Transaction
+    Route::post('/transaction', [ApiTransactionController::class, 'addTransaction']);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
@@ -65,4 +75,11 @@ Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.respons
     Route::post('/roomDetails',[ApiRoomDetailsController::class, 'addRoomDetails']);
     Route::put('/roomDetails',[ApiRoomDetailsController::class, 'updateRoomDetails']);
     Route::delete('/roomDetails',[ApiRoomDetailsController::class, 'deleteRoomDetails']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
+    Route::get('/transaction',[ApiTransactionController::class, 'getAllTransactions']);
+    Route::get('/transaction/admin/{hotel_id}',[ApiTransactionController::class, 'getTransactionsByHotelId']);
+    Route::put('/transaction',[ApiTransactionController::class, 'updateTransaction']);
+    Route::delete('/transaction',[ApiTransactionController::class, 'deleteTransaction']);
 });

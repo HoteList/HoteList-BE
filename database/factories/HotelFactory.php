@@ -17,8 +17,7 @@ class HotelFactory extends Factory
     public function definition()
     {
         return [
-            "name" => $this->faker->name(),
-            "capacity" => rand(10, 100),
+            "name" => $this->faker->name() . " hotel",
             "description" => $this->faker->sentence(),
             "image" => "https://firebasestorage.googleapis.com/v0/b/hotelist-447e9.appspot.com/o/11322e42e9bc8102.jpg?alt=media&token=579720c3-3c96-4186-b4a6-997e6b45663a,https://firebasestorage.googleapis.com/v0/b/hotelist-447e9.appspot.com/o/6722e09224226ca4.jpg?alt=media&token=4fda6af4-7c89-441a-b815-16b2b055242a"
         ];
