@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use App\Models\RoomDetails;
 use App\Models\Transaction;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -32,11 +33,38 @@ class ApiTransactionController extends Controller
     public function getTransactionById(Request $request, $id) {
         $transaction = Transaction::where('id', $id)->first();
 
+        error_log($transaction);
+        error_log($transaction["room_id"]);
+        $roomDetails = RoomDetails::where('id',$transaction["room_id"])->first();
+        error_log($roomDetails);
+        $hotel = Hotel::where('id',$roomDetails["hotel_id"])->first();
+        error_log($hotel);
+        $transaction["room_detail_name"] = $roomDetails["name"];
+
+        $transaction["hotel_name"] = $hotel["name"];
+
         return response($transaction, 200);
     }
 
     public function getTransactionsByUserId() {
         $transactions = Transaction::where('user_id', auth()->user()->id)->get();
+
+
+        // $roomDetails = RoomDetails::where('id',$transactions["room_id"])->first();
+        // error_log($roomDetails);
+        // $hotel = Hotel::where('id',$roomDetails["hotel_id"])->first();
+        // error_log($hotel);
+        // $transaction["room_detail_name"] = $roomDetails["name"];
+
+        // $transaction["hotel_name"] = $hotel["name"];
+        foreach($transactions as $transaction) {
+            
+            $roomDetails = RoomDetails::where('id',$transaction["room_id"])->first();
+            $hotel = Hotel::where('id',$roomDetails["hotel_id"])->first();
+            $transaction["room_detail_name"] = $roomDetails["name"];
+            $transaction["hotel_name"] = $hotel["name"];
+
+        }
         
         return response($transactions, 200);
     }
