@@ -35,7 +35,7 @@ class ApiTransactionController extends Controller
         return response($transaction, 200);
     }
 
-    public function getTransactionsByUserId(Request $request) {
+    public function getTransactionsByUserId() {
         $transactions = Transaction::where('user_id', auth()->user()->id)->get();
         
         return response($transactions, 200);

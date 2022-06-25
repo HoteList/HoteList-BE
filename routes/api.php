@@ -23,10 +23,6 @@ use App\Http\Controllers\User\ApiUserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('/',function(){
     return response()->json('Helo..');
 });
@@ -51,7 +47,7 @@ Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], functi
     Route::get('/hotel/{hotelid}', [ApiHotelController::class, 'getOneHotel']);
 
     // Get Transaction by ID
-    Route::get('/transaction/{id}', [ApiTransactionController::class, 'getTransactionById']);
+    Route::get('/transaction/id/{id}', [ApiTransactionController::class, 'getTransactionById']);
 
     // Get Transaction by User ID
     Route::get('/transaction/user', [ApiTransactionController::class, 'getTransactionsByUserId']);
