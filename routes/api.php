@@ -73,6 +73,9 @@ Route::group(['middleware' => ['cors', 'json.response', 'auth:sanctum']], functi
 
 Route::group(['middleware' => ['auth:sanctum', 'is_admin', 'cors', 'json.response']], function () {
     Route::get('/user',[ApiUserController::class, 'getAllUsers']);
+});
+
+Route::group(['middleware' => ['auth:sanctum', 'cors', 'json.response']], function () {
     Route::put('/user',[ApiUserController::class, 'updateUser']);
 });
 
